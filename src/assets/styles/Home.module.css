@@ -1,0 +1,15 @@
+.Container{
+    display: flex;
+    width: 100%;
+    gap:20px;
+    min-height: 100vh;
+    /* border:2px dashed red; */
+    padding:4px;
+}
+
+@media (max-width:499px) {
+    .Container{
+        display:flex;
+        flex-direction: column-reverse;
+    }
+}
