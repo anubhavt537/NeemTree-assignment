@@ -12,51 +12,52 @@ const UserList = () => {
     sort: "ascending",
   });
   const dispatch = useDispatch();
-  const getUsers = useSelector((store) => {
-    return store.users;
-  });
+  const getUsers = useSelector((store) => store.users);
+
   const handleChange = (e) => {
-    // console.log("HANDLE CHANGE");
-    setFilters((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
+    setFilters((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
+
   const handleAccording = () => {
-    // console.log("HANDLE ACCORDING");
     if (getUsers && getUsers.length > 0) {
       let filtersUser = [];
       for (let i = 0; i < getUsers.length; i++) {
-        // console.log(typeof getUsers[i]);
         for (let key in getUsers[i]) {
           if (
             getUsers[i][key]
               .toLowerCase()
-              .indexOf(filters.search.toLowerCase()) != -1
+              .includes(filters.search.toLowerCase())
           ) {
             filtersUser.push(getUsers[i]);
             break;
           }
         }
       }
-      // console.log(getUsers.length);
-      // console.log(filtersUser);
       if (filters.sort === "descending") {
         const reverseArr = filtersUser.reverse();
         setUser(reverseArr);
-        // console.log(reverseArr);
-      } else setUser(filtersUser);
+      } else {
+        setUser(filtersUser);
+      }
     }
   };
+
   useEffect(() => {
     setUser(getUsers);
-    // console.log("getUsers in UserList", getUsers);
     handleAccording();
   }, [filters.search, filters.sort, getUsers]);
+
   return (
     <div className={style.main}>
+      <div className={style.header}>
+        <h1>MANAGE USER</h1>
+        <button className={style.addButton} onClick={() => navigate("/add")}>
+          Add User ➕
+        </button>
+      </div>
       <div className={style.search}>
         <label>Search</label>
         <br />
@@ -67,14 +68,6 @@ const UserList = () => {
           onChange={handleChange}
         />
       </div>
-      <div className={style.sort}>
-        <label>Sort</label>
-        <br />
-        <select name="sort" defaultValue={filters.sort} onChange={handleChange}>
-          <option value="ascending">Ascending ⬇</option>
-          <option value="descending">Descending ⬆</option>
-        </select>
-      </div>
       <div className={style.tableSection}>
         {users && users.length > 0 ? (
           <table>
@@ -83,38 +76,36 @@ const UserList = () => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>role</th>
-                <th>location</th>
-                <th>department</th>
+                <th>Role</th>
+                <th>Location</th>
+                <th>Department</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => {
-                return (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.role}</td>
-                    <td>{user.location}</td>
-                    <td>{user.department}</td>
-                    <td>
-                      <button onClick={() => navigate(`/edit/${user.id}`)}>
-                        Edit
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => deleteUserAction(user.id, dispatch)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                  <td>{user.role}</td>
+                  <td>{user.location}</td>
+                  <td>{user.department}</td>
+                  <td>
+                    <button onClick={() => navigate(`/edit/${user.id}`)}>
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => deleteUserAction(user.id, dispatch)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         ) : (

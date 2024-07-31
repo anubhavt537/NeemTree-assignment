@@ -7,11 +7,10 @@ const Navigation = () => {
     <div className={style.nav}>
       <NavLink
         to="/"
-        style={({ isActive, isPending }) =>
+        style={({ isActive }) =>
           isActive
             ? {
                 fontWeight: "bold",
-                // backgroundColor: "white",
                 color: "blue",
                 textDecoration: "none",
               }
@@ -21,24 +20,6 @@ const Navigation = () => {
         }
       >
         Home 🏠
-      </NavLink>
-      &nbsp;
-      <NavLink
-        to="/add"
-        style={({ isActive, isPending }) =>
-          isActive
-            ? {
-                fontWeight: "bold",
-                // backgroundColor: "white",
-                color: "blue",
-                textDecoration: "none",
-              }
-            : {
-                textDecoration: "none",
-              }
-        }
-      >
-        Add User ➕
       </NavLink>
     </div>
   );

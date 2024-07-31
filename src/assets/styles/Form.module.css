@@ -1,13 +1,87 @@
-.Wrapper{
-    flex:8;
+/* Centering the form */
+.Wrapper {
     display: flex;
-    height:inherit;
     justify-content: center;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-.Form{  
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 50px;
-    border-radius: 20px;
-}
+    height: 100vh;
+    background-color: #f2f2f2;
+  }
+  
+  /* Form container styling */
+  .Form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 600px; /* Increased width for more space */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-gap: 20px; /* Space between the rows and columns */
+  }
+  
+  /* Each form element container */
+  .Form div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label styling */
+  .Form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Input field styling */
+  .Form input[type="text"],
+  .Form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Input focus effect */
+  .Form input[type="text"]:focus,
+  .Form input[type="email"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+  /* Full-width button styling */
+  .Form button {
+    grid-column: 1 / -1; /* Spans the button across both columns */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .Form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Toast container for notifications */
+  .ToastContainer {
+    z-index: 9999;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .Form {
+      width: 90%;
+      grid-template-columns: 1fr; /* Stack fields in one column */
+      padding: 15px;
+    }
+  
+    .Form button {
+      width: 100%;
+    }
+  }
+  

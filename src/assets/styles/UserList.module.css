@@ -1,39 +1,91 @@
-.main{
-    flex:8;
-    /* border:3px solid blue; */
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    height: inherit;
-    padding: 20px 0;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.main {
+    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
-.search{
-    flex-basis: 45%;
-    /* text-align: center; */
-    padding: 5px;
-    margin: auto;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
-.sort{
-    flex-basis: 45%;
-    margin: auto;
-    padding: 5px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+.search {
+    margin-bottom: 20px;
 }
-.tableSection{
-    flex-basis: 90%;
-    overflow: scroll;
-    overflow-y: hidden;
-    margin: 50px auto;
-    padding: 20px;
-    text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 20px;
+
+.search input,
+.sort select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-.tableSection table{
-    margin: auto;
+
+.tableSection {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #f4f4f4;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button:nth-of-type(1) {
+    background-color: #4caf50; /* Green for Edit */
+}
+
+button:nth-of-type(2) {
+    background-color: #f44336; /* Red for Delete */
+}
+
+h1 {
+    color: #4caf50;
+}
+
+.addButton {
+    margin-left: 20px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addButton:hover {
+    background-color: #0056b3;
 }

@@ -1,15 +1,128 @@
-.Container{
+/* Main wrapper styling */
+.Wrapper {
     display: flex;
-    width: 100%;
-    gap:20px;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    /* border:2px dashed red; */
-    padding:4px;
-}
-
-@media (max-width:499px) {
-    .Container{
-        display:flex;
-        flex-direction: column-reverse;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  /* Form container styling */
+  .Form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 100%;
+  }
+  
+  /* General styling for form fields */
+  .Form div {
+    margin-bottom: 15px;
+  }
+  
+  /* Label styling */
+  .Form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Input field styling */
+  .Form input[type="text"],
+  .Form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Input field focus styling */
+  .Form input[type="text"]:focus,
+  .Form input[type="email"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+  /* Submit button styling */
+  .Form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit button hover effect */
+  .Form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Toast container z-index */
+  .ToastContainer {
+    z-index: 9999;
+  }
+  
+  /* Responsive design: Mobile-first approach */
+  
+  /* For very small screens (less than 480px) */
+  @media (max-width: 480px) {
+    .Form {
+      padding: 15px;
     }
-}
+  
+    .Form input[type="text"],
+    .Form input[type="email"] {
+      padding: 8px;
+      font-size: 13px;
+    }
+  
+    .Form button {
+      padding: 8px;
+      font-size: 15px;
+    }
+  }
+  
+  /* For small screens (481px to 768px) */
+  @media (max-width: 768px) {
+    .Wrapper {
+      padding: 10px;
+    }
+  
+    .Form {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .Form input[type="text"],
+    .Form input[type="email"] {
+      font-size: 14px;
+    }
+  
+    .Form button {
+      font-size: 16px;
+    }
+  }
+  
+  /* For medium screens (769px to 1024px) */
+  @media (max-width: 1024px) {
+    .Form {
+      width: 80%;
+    }
+  }
+  
+  /* For large screens (more than 1024px) */
+  @media (min-width: 1025px) {
+    .Form {
+      width: 50%;
+    }
+  }
+  

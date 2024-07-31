@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { addUserAction } from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { useNavigate } from "react-router-dom";
-import style from "../assets/styles/Form.module.css"
+import style from "../assets/styles/Form.module.css";
+
 const Form = () => {
   const [value, setValue] = useState({
     name: "",
     email: "",
     phone: "",
     role: "",
-    location:"",
-    department:""
+    location: "",
+    department: ""
   });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const users = useSelector((store) => store.users);
+
   const handleChange = (e) => {
     if (e.target.name === "phone") {
       if (!isNaN(e.target.value)) {
@@ -26,30 +30,36 @@ const Form = () => {
       } else {
         return;
       }
+    } else {
+      setValue((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
     }
-    setValue((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-
-    }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
 
+    // Check for duplicate email
+    const emailExists = users.some((user) => user.email === value.email);
 
+    if (emailExists) {
+      toast.error("This email is already registered.");
+      return;
+    }
+
+    // Dispatch the action to add the user
     addUserAction(value, dispatch);
 
     toast.success(`User ${value.name} added Successfully`);
-    setValue({ name: "", email: "", phone: "" ,   role: "",
-    location:"",
-    department:"" });
+    setValue({ name: "", email: "", phone: "", role: "", location: "", department: "" });
 
     setTimeout(() => {
       navigate("/");
     }, 3000);
   };
-  useEffect(() => {}, []);
+
   return (
     <div className={style.Wrapper}>
       <ToastContainer />
@@ -90,7 +100,7 @@ const Form = () => {
           />
         </div>
         <div>
-          <label>role</label>
+          <label>Role</label>
           <br />
           <input
             type="text"
@@ -101,7 +111,7 @@ const Form = () => {
           />
         </div>
         <div>
-          <label>location</label>
+          <label>Location</label>
           <br />
           <input
             type="text"
@@ -112,7 +122,7 @@ const Form = () => {
           />
         </div>
         <div>
-          <label>department</label>
+          <label>Department</label>
           <br />
           <input
             type="text"
