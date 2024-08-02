@@ -11,14 +11,28 @@ const UserList = () => {
     search: "",
     sort: "ascending",
   });
+  const [emailSuggestions, setEmailSuggestions] = useState([]);
   const dispatch = useDispatch();
   const getUsers = useSelector((store) => store.users);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setFilters((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
+
+    if (name === "search" && value !== "") {
+      const suggestions = getUsers
+        .map((user) => user.email)
+        .filter((email) =>
+          email.toLowerCase().includes(value.toLowerCase())
+        );
+      setEmailSuggestions(suggestions);
+    } else {
+      setEmailSuggestions([]);
+    }
   };
 
   const handleAccording = () => {
@@ -45,6 +59,14 @@ const UserList = () => {
     }
   };
 
+  const handleSuggestionClick = (email) => {
+    setFilters((prev) => ({
+      ...prev,
+      search: email,
+    }));
+    setEmailSuggestions([]);
+  };
+
   useEffect(() => {
     setUser(getUsers);
     handleAccording();
@@ -66,7 +88,20 @@ const UserList = () => {
           name="search"
           value={filters.search}
           onChange={handleChange}
+          autoComplete="off"
         />
+        {emailSuggestions.length > 0 && (
+          <ul className={style.suggestions}>
+            {emailSuggestions.map((email, index) => (
+              <li
+                key={index}
+                onClick={() => handleSuggestionClick(email)}
+              >
+                {email}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className={style.tableSection}>
         {users && users.length > 0 ? (
