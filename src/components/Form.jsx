@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { addUserAction } from "../redux/action";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { addUserAction, editUserAction } from "../redux/action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { useNavigate } from "react-router-dom";
 import style from "../assets/styles/Form.module.css";
 
-const Form = () => {
+const Form = ({ mode = "add" }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [value, setValue] = useState({
     name: "",
     email: "",
@@ -16,43 +18,43 @@ const Form = () => {
     department: ""
   });
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { id } = useParams();
   const users = useSelector((store) => store.users);
 
-  const handleChange = (e) => {
-    if (e.target.name === "phone") {
-      if (!isNaN(e.target.value)) {
-        setValue((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        }));
-      } else {
-        return;
-      }
-    } else {
-      setValue((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value,
-      }));
+  useEffect(() => {
+    if (mode === "edit" && id) {
+      const findUser = users.find((user) => user.id === id);
+      if (findUser) setValue(findUser);
     }
+  }, [mode, id, users]);
+
+  const handleChange = (e) => {
+    if (e.target.name === "phone" && isNaN(e.target.value)) {
+      return;
+    }
+    setValue((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check for duplicate email
-    const emailExists = users.some((user) => user.email === value.email);
-
-    if (emailExists) {
+    
+    // Check for duplicate email if adding
+    if (mode === "add" && users.some((user) => user.email === value.email)) {
       toast.error("This email is already registered.");
       return;
     }
 
-    // Dispatch the action to add the user
-    addUserAction(value, dispatch);
+    if (mode === "add") {
+      addUserAction(value, dispatch);
+      toast.success(`User ${value.name} added successfully`);
+    } else {
+      editUserAction(value, dispatch);
+      toast.success(`User ${value.name} edited successfully`);
+    }
 
-    toast.success(`User ${value.name} added Successfully`);
     setValue({ name: "", email: "", phone: "", role: "", location: "", department: "" });
 
     setTimeout(() => {
@@ -132,7 +134,7 @@ const Form = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">ADD</button>
+        <button type="submit">{mode === "add" ? "ADD" : "EDIT"}</button>
       </form>
     </div>
   );
